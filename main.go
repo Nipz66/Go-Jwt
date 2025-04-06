@@ -3,6 +3,7 @@ package main
 import (
 	"go-jwt/controllers"
 	"go-jwt/initializers"
+	"go-jwt/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func main() {
 
 	router.POST("/signup", controllers.Signup)
 	router.POST("/login", controllers.Login)
-	router.GET("/validate", controllers.Validate)
+	router.GET("/validate", middlewares.JwtMiddleware, controllers.Validate)
 
 	router.Run()
 }
