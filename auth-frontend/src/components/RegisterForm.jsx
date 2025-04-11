@@ -9,33 +9,33 @@ const RegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validation
     if (!username || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       return;
     }
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
+
     if (password.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
     }
-    
+
     try {
       setError('');
       setLoading(true);
-      
+
       await register(username, email, password);
       navigate('/profile');
     } catch (err) {
@@ -48,9 +48,9 @@ const RegisterForm = () => {
   return (
     <div className="form-container">
       <h2>Register</h2>
-      
+
       {error && <div className="error-message">{error}</div>}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
@@ -62,7 +62,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -73,7 +73,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
@@ -85,7 +85,7 @@ const RegisterForm = () => {
             minLength="8"
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
@@ -96,7 +96,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        
+
         <button type="submit" disabled={loading} className="btn-primary">
           {loading ? 'Registering...' : 'Register'}
         </button>

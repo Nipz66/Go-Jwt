@@ -9,7 +9,7 @@ import (
 
 func AuthRoutes(r *gin.Engine) {
 
-	r.POST("/signup", controllers.Signup)
-	r.POST("/login", controllers.Login)
-	r.GET("/validate", middlewares.JwtMiddleware, controllers.Validate)
+	r.POST("auth/signup", controllers.Signup)
+	r.POST("auth/login", controllers.Login)
+	r.GET("auth/validate", middlewares.JwtMiddleware, controllers.Validate)
 }

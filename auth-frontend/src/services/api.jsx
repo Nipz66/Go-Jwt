@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'http://localhost:8080/auth';
 
 const api = axios.create({
     baseURL: API_URL,
@@ -22,13 +22,13 @@ api.interceptors.request.use(
 );
 
 export const authService = {
-    register: async (username, email, password) => {
-        const response = await api.post('/register', { username, email, password });
+    register: async (userName, email, password) => {
+        const response = await api.post('/signup', { userName, email, password });
         return response.data;
     },
 
-    login: async (username, password) => {
-        const response = await api.post('/login', { username, password });
+    login: async (email, password) => {
+        const response = await api.post('/login', { email, password });
         return response.data;
     },
 

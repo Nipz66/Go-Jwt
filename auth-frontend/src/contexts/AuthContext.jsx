@@ -12,21 +12,38 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Check if user is already logged in (from localStorage)
+    // // Check if user is already logged in (from localStorage)
+    // useEffect(() => {
+    //     const user = localStorage.getItem('user');
+    //     if (user) {
+    //         setCurrentUser(JSON.parse(user));
+    //     }
+    //     setLoading(false);
+    // }, []);
+
     useEffect(() => {
-        const user = localStorage.getItem('user');
-        if (user) {
-            setCurrentUser(JSON.parse(user));
-        }
-        setLoading(false);
+        const fetchCurrentUser = async () => {
+            try {
+                setLoading(true);
+                const user = await authService.getProfile(); // backend reads JWT from cookie
+                setCurrentUser(user);
+            } catch (err) {
+                setCurrentUser(null); // Not logged in
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCurrentUser();
     }, []);
 
-    const register = async (username, email, password) => {
+
+    const register = async (userName, email, password) => {
         try {
             setError(null);
             setLoading(true);
 
-            const data = await authService.register(username, email, password);
+            const data = await authService.register(userName, email, password);
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
@@ -41,12 +58,12 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const login = async (username, password) => {
+    const login = async (email, password) => {
         try {
             setError(null);
             setLoading(true);
 
-            const data = await authService.login(username, password);
+            const data = await authService.login(email, password);
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));

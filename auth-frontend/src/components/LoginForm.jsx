@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -15,8 +15,8 @@ const LoginForm = () => {
         e.preventDefault();
 
         // Simple validation
-        if (!username || !password) {
-            setError('Please enter both username and password');
+        if (!email || !password) {
+            setError('Please enter both email and password');
             return;
         }
 
@@ -24,8 +24,8 @@ const LoginForm = () => {
             setError('');
             setLoading(true);
 
-            await login(username, password);
-            navigate('/profile');
+            await login(email, password);
+            navigate('/login');
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to log in');
         } finally {
@@ -41,12 +41,12 @@ const LoginForm = () => {
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="text"
-                        id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
