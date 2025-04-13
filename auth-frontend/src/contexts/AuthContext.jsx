@@ -12,15 +12,6 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // // Check if user is already logged in (from localStorage)
-    // useEffect(() => {
-    //     const user = localStorage.getItem('user');
-    //     if (user) {
-    //         setCurrentUser(JSON.parse(user));
-    //     }
-    //     setLoading(false);
-    // }, []);
-
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {
@@ -28,7 +19,7 @@ export const AuthProvider = ({ children }) => {
                 const user = await authService.getProfile(); // backend reads JWT from cookie
                 setCurrentUser(user);
             } catch (err) {
-                setCurrentUser(null); // Not logged in
+                setCurrentUser(null);
             } finally {
                 setLoading(false);
             }
