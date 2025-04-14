@@ -13,7 +13,7 @@ const HomePage = () => {
                 {currentUser ? (
                     <div className="cta-container">
                         <p>You are logged in as <strong>{currentUser.username}</strong></p>
-                        <Link to="/validate" className="btn-primary">
+                        <Link to="/profile" className="btn-primary">
                             View Your Profile
                         </Link>
                     </div>

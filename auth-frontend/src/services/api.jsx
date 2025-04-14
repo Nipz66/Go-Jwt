@@ -33,7 +33,7 @@ export const authService = {
     },
 
     getProfile: async () => {
-        const response = await api.get('/validate');
+        const response = await api.get('/profile');
         return response.data;
     },
 
